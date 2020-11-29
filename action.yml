@@ -1,0 +1,16 @@
+name: 'tagger'
+description: 'Update version tag'
+outputs:
+  version: 
+    description: "Updated version"
+    value: ${{ steps.tagger.outputs.version }}
+runs:
+  using: "composite"
+  steps: 
+    - id: tagger
+    - run: |
+        ${{ github.action_path }}/tagger.sh
+        NEWVERS=`git describe --long | cut -d- -f1`
+        echo ::set-output name=version::${NEWVERS}
+        git push --tags --verbose
+      shell: bash
