@@ -7,7 +7,8 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - run: |
+    - id: tagger
+      run: |
         ${{ github.action_path }}/tagger.sh
         NEWVERS=`git describe --long | cut -d- -f1`
         echo ::set-output name=version::${NEWVERS}
