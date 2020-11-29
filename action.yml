@@ -7,7 +7,6 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - id: tagger
     - run: |
         ${{ github.action_path }}/tagger.sh
         NEWVERS=`git describe --long | cut -d- -f1`
