@@ -1,13 +1,13 @@
 #!/bin/bash
 
 version_str="$(echo -e "$(<version)" | tr -d '[:space:]')"
-IFS='.' read -ra zitiVer <<< "${version_str}"
+IFS='.' read -ra fileVer <<< "${version_str}"
 
-zitiMajor=${zitiVer[0]}
-zitiMinor=${zitiVer[1]}
-zitiPatch=${zitiVer[2]}
+fileMajor=${fileVer[0]}
+fileMinor=${fileVer[1]}
+filePatch=${fileVer[2]}
 
-echo "ZitiVersion: -${zitiMajor}-${zitiMinor}-${zitiPatch}-"
+echo "FileVersion: -${fileMajor}-${fileMinor}-${filePatch}-"
 
 longVer=`git describe --long`
 if [ $? -ne 0 ] ; then
@@ -26,13 +26,13 @@ tagPatch=${tagVer[2]}
 
 echo "TagVersion: -${tagMajor}-${tagMinor}-${tagPatch}-"
 
-[ ${zitiMajor} -gt ${tagMajor} ]
+[ ${fileMajor} -gt ${tagMajor} ]
 majorBump=$?
 
-[ ${zitiMajor} -eq ${tagMajor} ] && [ ${zitiMinor} -gt ${tagMinor} ] 
+[ ${fileMajor} -eq ${tagMajor} ] && [ ${fileMinor} -gt ${tagMinor} ] 
 minorBump=$?
 
-[ ${zitiMajor} -eq ${tagMajor} ] && [ ${zitiMinor} -eq ${tagMinor} ] && [ ${zitiPatch} -gt ${tagPatch} ] 
+[ ${fileMajor} -eq ${tagMajor} ] && [ ${fileMinor} -eq ${tagMinor} ] && [ ${filePatch} -gt ${tagPatch} ] 
 patchBump=$?
 
 if [ ${majorBump} -eq 0 ] || [ $minorBump -eq 0 ] || [ $patchBump -eq 0 ] ; then
